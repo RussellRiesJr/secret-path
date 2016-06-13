@@ -1,0 +1,27 @@
+{
+  "name": "secret-path",
+  "homepage": "https://github.com/RussellRiesJr/secret-path",
+  "authors": [
+    "Russell Ries <riesru@gmail.com>"
+  ],
+  "description": "Russell Ries Jr. Capstone for NSS Front End",
+  "main": "",
+  "keywords": [
+    "directions",
+    "geolocation",
+    "secret"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "firebase": "^3.0.4",
+    "angular": "^1.5.6"
+  }
+}
