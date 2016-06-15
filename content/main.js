@@ -15,14 +15,13 @@ angular.module('secret', ['ngRoute'])
   // Establishing a constant for the Firebase API
   .constant('firebase_URL', 'https://the-secret-path.firebaseio.com/')
 
-
   .controller('MainCtrl', function($scope, $timeout, googleFactory) {
     const main = this;
 
     $scope.user = '';
     $scope.map = null;
 
-    // Taking User starting & ending points, triggering API request
+    // Taking user starting & ending points, triggering API request
     main.locations = function () {
       let startPlus = $scope.user.starting.split(' ').join('+')
       let endPlus = $scope.user.ending.split(' ').join('+')
@@ -32,6 +31,7 @@ angular.module('secret', ['ngRoute'])
         .then((response) => main.initialize(response))
     };
 
+    // Initializing loading map with user's current position as center
     main.initialize = function (response) {
       directionsDisplay = new google.maps.DirectionsRenderer(response);
       console.log("map center?",response)
@@ -44,6 +44,7 @@ angular.module('secret', ['ngRoute'])
       main.calcRoute();
     }
 
+    //Calculating directions from user input
     main.calcRoute = function () {
       var start = $scope.user.starting;
       var end = $scope.user.ending;
@@ -60,6 +61,8 @@ angular.module('secret', ['ngRoute'])
     }
 
     let map = null;
+
+    // Finding user's current position
     navigator.geolocation.getCurrentPosition(initMap);
 
     // Initilizing Google Map
