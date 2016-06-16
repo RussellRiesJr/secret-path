@@ -75,6 +75,9 @@ angular.module('secret', ['ngRoute'])
       firebaseFactory.setInfo({coords:accessLoc, dateTime: accessDateTime.toString(), directions: hiddenRoute});
       announce.innerHTML = `<h4>Your Secret Route has been set. It can be accessed by going to ${$scope.user.starting} on ${accessDateTime} and opening this page.<h4>`;
       navigator.geolocation.getCurrentPosition(initMap);
+      $scope.user.starting = null;
+      $scope.user.ending = null;
+      $scope.user.dateTime = null;
     }
 
     let map = null;
