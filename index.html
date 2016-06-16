@@ -16,12 +16,14 @@
         Ending Location: <input type="text" ng-model="user.ending" /><br />
         <input type="submit" class="btn btn-primary" ng-click="main.locations()" />
       </form>
-      <div id="map" style="width:400px; height:400px;">
-      </div>
+      <div id="map" style="width:400px; height:400px;"></div>
       <form>
         Set Access Date and Time:<input type="datetime-local" ng-model="user.dateTime" /><br />
         <button type="submit" class="btn btn-danger" ng-click="main.setPath()">Set</button>
       </form>
+      <div id="announce">
+
+      </div>
     </div>
   </div>
 

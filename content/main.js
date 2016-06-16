@@ -20,6 +20,7 @@ angular.module('secret', ['ngRoute'])
 
     $scope.user = '';
     $scope.map = null;
+    announce = document.getElementById('announce');
     let responseData;
 
     // Taking user input starting & ending points, triggering API request
@@ -71,6 +72,7 @@ angular.module('secret', ['ngRoute'])
       console.log("access date & time", accessDateTime);
       console.log("Access Coords", accessLoc);
       console.log("Route", hiddenRoute);
+      announce.innerHTML = `<h2>Your Secret Route has been set. It can be accessed by going to ${$scope.user.starting} on ${accessDateTime}.<h2>`;
     }
 
     let map = null;
