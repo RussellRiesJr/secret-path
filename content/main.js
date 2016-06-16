@@ -15,26 +15,30 @@ angular.module('secret', ['ngRoute'])
   // Establishing a constant for the Firebase API
   .constant('firebase_URL', 'https://the-secret-path.firebaseio.com/')
 
-  .controller('MainCtrl', function($scope, $timeout, googleFactory) {
+  .controller('MainCtrl', function($scope, $timeout, googleFactory, firebaseFactory) {
     const main = this;
 
     $scope.user = '';
     $scope.map = null;
+    announce = document.getElementById('announce');
+    let responseData;
 
-    // Taking user starting & ending points, triggering API request
+    // Taking user input starting & ending points, triggering API request
     main.locations = function () {
       let startPlus = $scope.user.starting.split(' ').join('+')
       let endPlus = $scope.user.ending.split(' ').join('+')
       console.log("type startPlus =", startPlus);
       console.log("type endPlus =", endPlus);
       googleFactory.getDirections(startPlus, endPlus)
-        .then((response) => main.initialize(response))
+        .then((response) => {main.responseData = response;
+          main.initialize(response)
+        })
     };
 
-    // Initializing loading map with user's current position as center
+
+    // Initializing loading map with route based on user input
     main.initialize = function (response) {
       directionsDisplay = new google.maps.DirectionsRenderer(response);
-      console.log("map center?",response)
       var mapOptions = {
         zoom:7,
         center: {lat: response.data.routes[0].legs[0].start_location.lat, lng: response.data.routes[0].legs[0].start_location.lng},
@@ -60,12 +64,25 @@ angular.module('secret', ['ngRoute'])
       });
     }
 
+    // Setting route access date, time, location & send to Firebase
+    main.setPath = function () {
+      let accessDateTime = $scope.user.dateTime;
+      let accessLoc = {lat: main.responseData.data.routes[0].legs[0].start_location.lat, lng: main.responseData.data.routes[0].legs[0].start_location.lng};
+      let hiddenRoute = main.responseData.data;
+      console.log("access date & time", accessDateTime);
+      console.log("Access Coords", accessLoc);
+      console.log("Route", hiddenRoute);
+      firebaseFactory.setInfo({coords:accessLoc, dateTime: accessDateTime.toString(), directions: hiddenRoute});
+      announce.innerHTML = `<h4>Your Secret Route has been set. It can be accessed by going to ${$scope.user.starting} on ${accessDateTime} and opening this page.<h4>`;
+      navigator.geolocation.getCurrentPosition(initMap);
+    }
+
     let map = null;
 
     // Finding user's current position
     navigator.geolocation.getCurrentPosition(initMap);
 
-    // Initilizing Google Map
+    // Initilizing default Google Map
     function initMap (userPosition) {
       var mapDiv = document.getElementById('map');
       console.log('user position', userPosition);
@@ -81,11 +98,11 @@ angular.module('secret', ['ngRoute'])
   })
 
 
-// firebase.initializeApp({
-//     apiKey: "AIzaSyALb1dIBcyikJwzhS8u8kDKb4mAezdwNok",
-//     authDomain: "the-secret-path.firebaseapp.com",
-//     databaseURL: "https://the-secret-path.firebaseio.com",
-//     storageBucket: "the-secret-path.appspot.com",
-//   })
+firebase.initializeApp({
+    apiKey: "AIzaSyALb1dIBcyikJwzhS8u8kDKb4mAezdwNok",
+    authDomain: "the-secret-path.firebaseapp.com",
+    databaseURL: "https://the-secret-path.firebaseio.com",
+    storageBucket: "the-secret-path.appspot.com",
+  })
 
 
