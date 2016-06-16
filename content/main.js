@@ -39,7 +39,6 @@ angular.module('secret', ['ngRoute'])
     // Initializing loading map with route based on user input
     main.initialize = function (response) {
       directionsDisplay = new google.maps.DirectionsRenderer(response);
-      console.log("map center?",response)
       var mapOptions = {
         zoom:7,
         center: {lat: response.data.routes[0].legs[0].start_location.lat, lng: response.data.routes[0].legs[0].start_location.lng},
@@ -65,7 +64,7 @@ angular.module('secret', ['ngRoute'])
       });
     }
 
-    // Setting route access date, time & location
+    // Setting route access date, time, location & send to Firebase
     main.setPath = function () {
       let accessDateTime = $scope.user.dateTime;
       let accessLoc = {lat: main.responseData.data.routes[0].legs[0].start_location.lat, lng: main.responseData.data.routes[0].legs[0].start_location.lng};
@@ -73,8 +72,9 @@ angular.module('secret', ['ngRoute'])
       console.log("access date & time", accessDateTime);
       console.log("Access Coords", accessLoc);
       console.log("Route", hiddenRoute);
+      firebaseFactory.setInfo({coords:accessLoc, dateTime: accessDateTime.toString(), directions: hiddenRoute});
       announce.innerHTML = `<h4>Your Secret Route has been set. It can be accessed by going to ${$scope.user.starting} on ${accessDateTime} and opening this page.<h4>`;
-    navigator.geolocation.getCurrentPosition(initMap);
+      navigator.geolocation.getCurrentPosition(initMap);
     }
 
     let map = null;
@@ -82,7 +82,7 @@ angular.module('secret', ['ngRoute'])
     // Finding user's current position
     navigator.geolocation.getCurrentPosition(initMap);
 
-    // Initilizing Google Map
+    // Initilizing default Google Map
     function initMap (userPosition) {
       var mapDiv = document.getElementById('map');
       console.log('user position', userPosition);
