@@ -65,6 +65,7 @@ angular.module('secret', ['ngRoute'])
       });
     }
 
+    // Setting route access date, time & location
     main.setPath = function () {
       let accessDateTime = $scope.user.dateTime;
       let accessLoc = {lat: main.responseData.data.routes[0].legs[0].start_location.lat, lng: main.responseData.data.routes[0].legs[0].start_location.lng};
@@ -72,7 +73,8 @@ angular.module('secret', ['ngRoute'])
       console.log("access date & time", accessDateTime);
       console.log("Access Coords", accessLoc);
       console.log("Route", hiddenRoute);
-      announce.innerHTML = `<h2>Your Secret Route has been set. It can be accessed by going to ${$scope.user.starting} on ${accessDateTime}.<h2>`;
+      announce.innerHTML = `<h4>Your Secret Route has been set. It can be accessed by going to ${$scope.user.starting} on ${accessDateTime} and opening this page.<h4>`;
+    navigator.geolocation.getCurrentPosition(initMap);
     }
 
     let map = null;
