@@ -15,23 +15,27 @@ angular.module('secret', ['ngRoute'])
   // Establishing a constant for the Firebase API
   .constant('firebase_URL', 'https://the-secret-path.firebaseio.com/')
 
-  .controller('MainCtrl', function($scope, $timeout, googleFactory) {
+  .controller('MainCtrl', function($scope, $timeout, googleFactory, firebaseFactory) {
     const main = this;
 
     $scope.user = '';
     $scope.map = null;
+    let responseData;
 
-    // Taking user starting & ending points, triggering API request
+    // Taking user input starting & ending points, triggering API request
     main.locations = function () {
       let startPlus = $scope.user.starting.split(' ').join('+')
       let endPlus = $scope.user.ending.split(' ').join('+')
       console.log("type startPlus =", startPlus);
       console.log("type endPlus =", endPlus);
       googleFactory.getDirections(startPlus, endPlus)
-        .then((response) => main.initialize(response))
+        .then((response) => {main.responseData = response;
+          main.initialize(response)
+        })
     };
 
-    // Initializing loading map with user's current position as center
+
+    // Initializing loading map with route based on user input
     main.initialize = function (response) {
       directionsDisplay = new google.maps.DirectionsRenderer(response);
       console.log("map center?",response)
@@ -60,6 +64,15 @@ angular.module('secret', ['ngRoute'])
       });
     }
 
+    main.setPath = function () {
+      let accessDateTime = $scope.user.dateTime;
+      let accessLoc = {lat: main.responseData.data.routes[0].legs[0].start_location.lat, lng: main.responseData.data.routes[0].legs[0].start_location.lng};
+      let hiddenRoute = main.responseData.data;
+      console.log("access date & time", accessDateTime);
+      console.log("Access Coords", accessLoc);
+      console.log("Route", hiddenRoute);
+    }
+
     let map = null;
 
     // Finding user's current position
@@ -81,11 +94,11 @@ angular.module('secret', ['ngRoute'])
   })
 
 
-// firebase.initializeApp({
-//     apiKey: "AIzaSyALb1dIBcyikJwzhS8u8kDKb4mAezdwNok",
-//     authDomain: "the-secret-path.firebaseapp.com",
-//     databaseURL: "https://the-secret-path.firebaseio.com",
-//     storageBucket: "the-secret-path.appspot.com",
-//   })
+firebase.initializeApp({
+    apiKey: "AIzaSyALb1dIBcyikJwzhS8u8kDKb4mAezdwNok",
+    authDomain: "the-secret-path.firebaseapp.com",
+    databaseURL: "https://the-secret-path.firebaseio.com",
+    storageBucket: "the-secret-path.appspot.com",
+  })
 
 
