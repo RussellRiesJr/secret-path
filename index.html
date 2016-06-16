@@ -17,8 +17,12 @@
         <input type="submit" class="btn btn-primary" ng-click="main.locations()" />
       </form>
       <div id="map" style="width:400px; height:400px;">
-
       </div>
+      <form>
+        Set Access Date:<input type="date" ng-model="user.date" /><br />
+        Set Access Time:<input type="time" ng-model="user.time" /><br />
+        <button type="submit" class="btn btn-danger" ng-click="main.setPath()">Set</button>
+      </form>
     </div>
   </div>
 
