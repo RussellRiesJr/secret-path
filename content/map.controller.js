@@ -25,15 +25,15 @@ angular.module('secret')
       console.log("map page data", holdingMap.data)
     }
 
+    // Getting key from URL
     let pathName = $routeParams.pathName;
     directions = document.getElementById('directions');
 
+    // Using key to return info from Firebase, posting initial directions
     firebase.database().ref(`/paths/${pathName}`).once("value").then(function(snapshot) {
       const startTime = snapshot.val().dateTime
       const startAddress = snapshot.val().startPoint
       let objStart = new Date(startTime);
-      // console.log("start time", startTime);
-      // console.log("obj start time", objStart, typeof objStart);
       directions.innerHTML = `<h5>This path will be available by going to ${startAddress} at ${startTime}<h5>`;
     })
   })
