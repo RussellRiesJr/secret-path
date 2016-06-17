@@ -3,7 +3,7 @@ angular.module('secret')
 
     return {
       setInfo: function (secretPath) {
-        firebase.database().ref('/paths').push(secretPath);
+        return firebase.database().ref('/paths').push(secretPath).then(response => response.key)
       }
 
     }

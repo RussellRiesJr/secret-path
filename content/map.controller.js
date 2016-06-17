@@ -26,5 +26,11 @@ angular.module('secret')
     }
 
     let pathName = $routeParams.pathName;
-      console.log("path name", pathName)
+
+    firebase.database().ref(`/paths/${pathName}`).once("value").then(function(snapshot) {
+      const startTime = snapshot.val().dateTime
+      let objStart = new Date(startTime);
+      console.log("start time", startTime);
+      console.log("obj start time", objStart, typeof objStart);
+    })
   })
