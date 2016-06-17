@@ -1,7 +1,7 @@
 angular.module('secret', ['ngRoute'])
   .config(($routeProvider) => {
     $routeProvider
-      .when('/map', {
+      .when('/map/:pathName?', {
         controller: 'mapCtrl',
         controllerAs: 'map',
         templateUrl: 'content/map.html'
@@ -27,8 +27,8 @@ angular.module('secret', ['ngRoute'])
     main.locations = function () {
       let startPlus = $scope.user.starting.split(' ').join('+')
       let endPlus = $scope.user.ending.split(' ').join('+')
-      console.log("type startPlus =", startPlus);
-      console.log("type endPlus =", endPlus);
+      // console.log("type startPlus =", startPlus);
+      // console.log("type endPlus =", endPlus);
       googleFactory.getDirections(startPlus, endPlus)
         .then((response) => {main.responseData = response;
           main.initialize(response)
@@ -67,13 +67,17 @@ angular.module('secret', ['ngRoute'])
     // Setting route access date, time, location & send to Firebase
     main.setPath = function () {
       let accessDateTime = $scope.user.dateTime;
+      let accessEndTime = $scope.user.endTime;
       let accessLoc = {lat: main.responseData.data.routes[0].legs[0].start_location.lat, lng: main.responseData.data.routes[0].legs[0].start_location.lng};
       let hiddenRoute = main.responseData.data;
+      let pathName = $scope.user.pathName.split(' ').join('');
       // console.log("access date & time", accessDateTime);
       // console.log("Access Coords", accessLoc);
       // console.log("Route", hiddenRoute);
-      firebaseFactory.setInfo({coords:accessLoc, dateTime: accessDateTime.toString(), directions: hiddenRoute});
-      announce.innerHTML = `<h4>Your Secret Route has been set. It can be accessed by going to ${$scope.user.starting} on ${accessDateTime} and opening this page.<h4>`;
+      console.log("Path Name", pathName);
+      console.log("Ending Time", accessEndTime);
+      firebaseFactory.setInfo({coords: accessLoc, dateTime: accessDateTime.toString(), endTime: accessEndTime.toString(), pathName: pathName, directions: hiddenRoute});
+      announce.innerHTML = `<h4>Your Secret Route has been set. It can be accessed by going to ${$scope.user.starting} on ${accessDateTime} and opening <a href="http://localhost:8080/map/${pathName}">theSecretPath.com/map/${pathName}</a>.<h4>`;
       main.resetHome();
     }
 
@@ -83,6 +87,8 @@ angular.module('secret', ['ngRoute'])
       $scope.user.starting = null;
       $scope.user.ending = null;
       $scope.user.dateTime = null;
+      $scope.user.endTime = null;
+      $scope.user.pathName = null;
     }
 
     let map = null;
