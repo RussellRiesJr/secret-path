@@ -8,7 +8,7 @@ angular.module('secret')
       })
     })
 
-  .controller('mapCtrl', function() {
+  .controller('mapCtrl', function($routeParams) {
     const map = this;
 
     // Finding user's current position & calling default map function
@@ -24,4 +24,13 @@ angular.module('secret')
       })
       console.log("map page data", holdingMap.data)
     }
+
+    let pathName = $routeParams.pathName;
+
+    firebase.database().ref(`/paths/${pathName}`).once("value").then(function(snapshot) {
+      const startTime = snapshot.val().dateTime
+      let objStart = new Date(startTime);
+      console.log("start time", startTime);
+      console.log("obj start time", objStart, typeof objStart);
+    })
   })
