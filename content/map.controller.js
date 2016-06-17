@@ -8,7 +8,7 @@ angular.module('secret')
       })
     })
 
-  .controller('mapCtrl', function() {
+  .controller('mapCtrl', function($routeParams) {
     const map = this;
 
     // Finding user's current position & calling default map function
@@ -24,4 +24,7 @@ angular.module('secret')
       })
       console.log("map page data", holdingMap.data)
     }
+
+    let pathName = $routeParams.pathName;
+      console.log("path name", pathName)
   })
