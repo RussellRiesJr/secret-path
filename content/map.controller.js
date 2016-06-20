@@ -1,14 +1,14 @@
 angular.module('secret')
   .config(($routeProvider) => {
     $routeProvider
-      .when('/map/:pathName', {
+      .when('/map/:key', {
         controller: 'mapCtrl',
         controllerAs: 'map',
         templateUrl: 'content/map.html'
       })
     })
 
-  .controller('mapCtrl', function($routeParams) {
+  .controller('mapCtrl', function($routeParams, firebaseFactory) {
     const map = this;
 
     // Finding user's current position & calling default map function
@@ -24,22 +24,41 @@ angular.module('secret')
       })
     }
 
-    // Defining user access geolocation
+    // Defining user access geolocation lat & lng
     let accessStartLat;
     let accessStartLng;
 
+    // Defining delete map time
+    let mapDeleteTime;
+
+    // Defining Direction infomation
+    let mapData;
+
+    // Defining start & end points for map
+    let startAddress;
+    let endAddress
+
+    // Establishing variables for map display
+    let directionsDisplay;
+    let directionsService = new google.maps.DirectionsService();
+
     // Getting key from URL
-    let pathName = $routeParams.pathName;
+    let pathKey = $routeParams.key;
     directions = document.getElementById('directions');
+    console.log('key?', pathKey);
 
     // Using key to return info from Firebase, posting initial directions
-    firebase.database().ref(`/paths/${pathName}`).once("value").then(function(snapshot) {
-      const startTime = snapshot.val().dateTime
-      const startAddress = snapshot.val().startPoint
-      accessStartLat = snapshot.val().coords.lat
-      // console.log('access start lat', accessStartLat);
-      accessStartLng = snapshot.val().coords.lng
+    firebase.database().ref(`/paths/${pathKey}`).once("value").then(function(snapshot) {
+      let startTime = snapshot.val().dateTime;
+      let endTime = snapshot.val().endTime;
+      startAddress = snapshot.val().startPoint;
+      endAddress = snapshot.val().endPoint;
+      mapData = snapshot.val().directions;
+      console.log('map data', mapData);
+      accessStartLat = snapshot.val().coords.lat;
+      accessStartLng = snapshot.val().coords.lng;
       let objStart = new Date(startTime);
+      mapDeleteTime = new Date(endTime);
       directions.innerHTML = `<h5>This path will be available by going to ${startAddress} at ${startTime}<h5>`;
       map.setTimeCheck(objStart);
     })
@@ -48,45 +67,58 @@ angular.module('secret')
     let timeIntervalId;
     let distanceIntervalId;
 
-    // Creating unit variable
+    // Creating miles unit variable
     const unit = 'M';
 
     // Creating Interval for checking time
     map.setTimeCheck = function (objStart) {
-      timeIntervalId = setInterval(map.timeCheck(objStart), 120000);
-      map.timeCheck(objStart);
+      timeIntervalId = window.setInterval(() => timeCheck(objStart), 15000);
+      // map.timeCheck(objStart);
     }
 
     // Checking current time against user input access time
-    map.timeCheck = function (objStart) {
+    function timeCheck (objStart) {
+      console.log('I ran!');
       let now = new Date ();
       let currentTime = now.getTime();
       let goTime = objStart - currentTime;
+      let stopTime = mapDeleteTime - currentTime;
       // console.log('is it time', goTime);
+      console.log('times up', stopTime);
       if(goTime <= 0) {
-        clearInterval(timeIntervalId);
         map.getNewPostion();
+      }
+      if(stopTime <= 0) {
+        clearInterval(timeIntervalId);
+        firebaseFactory.deletePath(pathKey);
+        navigator.geolocation.getCurrentPosition(initMap)
       }
     }
 
+    // Updating User position information
     map.getNewPostion = function () {
       navigator.geolocation.getCurrentPosition(setDistanceCheck);
     }
 
+    // Setting interval for distance check
     function setDistanceCheck (userPosition) {
-      distanceIntervalId = setInterval(checkDistance(userPosition), 120000);
-      checkDistance (userPosition)
+      distanceIntervalId = window.setInterval(() => checkDistance(userPosition), 15000);
+      // checkDistance (userPosition);
     }
 
+    // Setting parameters for distance check
     function checkDistance (userPosition) {
-      console.log('new user position?', userPosition);
-      console.log('access start lat?', accessStartLat);
       let userCurrentLat = userPosition.coords.latitude;
       let userCurrentLng = userPosition.coords.longitude;
       let userDis = distance(accessStartLat, accessStartLng, userCurrentLat, userCurrentLng, unit);
       console.log("distance?", userDis);
+      if(userDis < 0.1) {
+        clearInterval(distanceIntervalId);
+        map.postMap(mapData);
+      }
     }
 
+    // Detemining distance
     function distance(lat1, lon1, lat2, lon2, unit) {
         var radlat1 = Math.PI * lat1/180
         var radlat2 = Math.PI * lat2/180
@@ -100,4 +132,33 @@ angular.module('secret')
         dist = dist * 60 * 1.1515
         return dist
     }
+
+    // Returning secret map with route once time/location objectives are met
+    map.postMap = function (mapData) {
+      directionsDisplay = new google.maps.DirectionsRenderer(mapData);
+      var mapOptions = {
+        zoom:7,
+        center: {lat: mapData.routes[0].legs[0].start_location.lat, lng: mapData.routes[0].legs[0].start_location.lng},
+      }
+      secretMap = new google.maps.Map(document.getElementById("holdingMap"), mapOptions);
+      directionsDisplay.setMap(secretMap);
+      map.calcRoute();
+    }
+
+    //Calculating directions from user input
+    map.calcRoute = function () {
+      var start = startAddress;
+      var end = endAddress;
+      var request = {
+        origin:start,
+        destination:end,
+        travelMode: google.maps.TravelMode.DRIVING
+      };
+      directionsService.route(request, function(result, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(result);
+        }
+      });
+    }
+
   })
