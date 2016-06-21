@@ -1,4 +1,13 @@
+.whatever {
+  width: 900px;
+}
+
 #map {
-  width: 90%;
-  height: 90%;
+  width: 50vw;
+  height: 50vw;
+}
+
+#holdingMap {
+  width: 50vw;
+  height: 50vw;
 }
