@@ -163,7 +163,7 @@ angular.module('secret')
       var request = {
         origin:start,
         destination:end,
-        travelMode: `google.maps.TravelMode.${mode}`
+        travelMode:mode
       };
       directionsService.route(request, function(result, status) {
         if (status == google.maps.DirectionsStatus.OK) {
