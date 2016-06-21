@@ -1,13 +1,17 @@
 <div>
   <form>
-    Starting Location:<input type="text" ng-model="user.starting" required /><br />
-    Ending Location: <input type="text" ng-model="user.ending" required /><br />
+    Starting Location:<input type="text" ng-model="user.starting" required />
+    Ending Location: <input type="text" ng-model="user.ending" required />
+    Mode of Travel: <select id="mode" ng-model="user.mode" required>
+      <option value="DRIVING">Driving</option>
+      <option value="WALKING">Walking</option>
+    </select>
     <input type="submit" class="btn btn-primary" ng-click="main.locations()" />
   </form>
-  <div id="map" style="width:400px; height:400px;"></div>
+  <div id="map"></div>
   <form>
-    Set Access Date and Time:<input type="datetime-local" ng-model="user.dateTime" required /><br />
-    Delete Path Date and Time:<input type="datetime-local" ng-model="user.endTime" required /><br />
+    Start Time:<input type="datetime-local" ng-model="user.dateTime" required />
+    Delete Time:<input type="datetime-local" ng-model="user.endTime" required />
     <button type="submit" class="btn btn-danger" ng-click="main.setPath()">Set</button>
   </form>
   <div id="announce"></div>

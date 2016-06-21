@@ -34,6 +34,9 @@ angular.module('secret')
     // Defining Direction infomation
     let mapData;
 
+    // Defining mode of travel
+    let mode;
+
     // Defining start & end points for map
     let startAddress;
     let endAddress
@@ -54,6 +57,7 @@ angular.module('secret')
       startAddress = snapshot.val().startPoint;
       endAddress = snapshot.val().endPoint;
       mapData = snapshot.val().directions;
+      mode = snapshot.val().mode;
       console.log('map data', mapData);
       accessStartLat = snapshot.val().coords.lat;
       accessStartLng = snapshot.val().coords.lng;
@@ -63,7 +67,7 @@ angular.module('secret')
       map.setTimeCheck(objStart);
     })
 
-    // Creating emty variables to hold Interval Ids for time and distance checks
+    // Creating empty variables to hold Interval Ids for time and distance checks
     let timeIntervalId;
     let distanceIntervalId;
 
@@ -76,6 +80,8 @@ angular.module('secret')
       // map.timeCheck(objStart);
     }
 
+    let called = false;
+
     // Checking current time against user input access time
     function timeCheck (objStart) {
       console.log('I ran!');
@@ -85,13 +91,14 @@ angular.module('secret')
       let stopTime = mapDeleteTime - currentTime;
       // console.log('is it time', goTime);
       console.log('times up', stopTime);
-      if(goTime <= 0) {
+      if(goTime <= 0 && called != true) {
+        called = true;
         map.getNewPostion();
       }
       if(stopTime <= 0) {
-        clearInterval(timeIntervalId);
-        firebaseFactory.deletePath(pathKey);
-        navigator.geolocation.getCurrentPosition(initMap)
+        window.clearInterval(timeIntervalId);
+        firebaseFactory.deletePath(pathKey)
+        navigator.geolocation.getCurrentPosition(initMap);
       }
     }
 
@@ -103,17 +110,21 @@ angular.module('secret')
     // Setting interval for distance check
     function setDistanceCheck (userPosition) {
       distanceIntervalId = window.setInterval(() => checkDistance(userPosition), 15000);
+      console.log("distanceIntervalId as set:", distanceIntervalId);
       // checkDistance (userPosition);
     }
 
+    let calledDis = false;
     // Setting parameters for distance check
     function checkDistance (userPosition) {
       let userCurrentLat = userPosition.coords.latitude;
       let userCurrentLng = userPosition.coords.longitude;
       let userDis = distance(accessStartLat, accessStartLng, userCurrentLat, userCurrentLng, unit);
       console.log("distance?", userDis);
-      if(userDis < 0.1) {
-        clearInterval(distanceIntervalId);
+      if(userDis < 0.1 && calledDis != true) {
+        calledDis = true;
+        console.log("distanceIntervalId as stopped:", distanceIntervalId);
+        window.clearInterval(distanceIntervalId);
         map.postMap(mapData);
       }
     }
@@ -152,7 +163,7 @@ angular.module('secret')
       var request = {
         origin:start,
         destination:end,
-        travelMode: google.maps.TravelMode.DRIVING
+        travelMode:mode
       };
       directionsService.route(request, function(result, status) {
         if (status == google.maps.DirectionsStatus.OK) {
