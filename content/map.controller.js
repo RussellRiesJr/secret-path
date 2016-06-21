@@ -34,6 +34,9 @@ angular.module('secret')
     // Defining Direction infomation
     let mapData;
 
+    // Defining mode of travel
+    let mode;
+
     // Defining start & end points for map
     let startAddress;
     let endAddress
@@ -54,6 +57,7 @@ angular.module('secret')
       startAddress = snapshot.val().startPoint;
       endAddress = snapshot.val().endPoint;
       mapData = snapshot.val().directions;
+      mode = snapshot.val().mode;
       console.log('map data', mapData);
       accessStartLat = snapshot.val().coords.lat;
       accessStartLng = snapshot.val().coords.lng;
@@ -159,7 +163,7 @@ angular.module('secret')
       var request = {
         origin:start,
         destination:end,
-        travelMode: google.maps.TravelMode.DRIVING
+        travelMode: `google.maps.TravelMode.${mode}`
       };
       directionsService.route(request, function(result, status) {
         if (status == google.maps.DirectionsStatus.OK) {
