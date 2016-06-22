@@ -25,9 +25,10 @@ angular.module('secret', ['ngRoute'])
 
     // Taking user input starting & ending points, triggering API request
     main.locations = function () {
-      let startPlus = $scope.user.starting.split(' ').join('+')
-      let endPlus = $scope.user.ending.split(' ').join('+')
-      googleFactory.getDirections(startPlus, endPlus)
+      let startPlus = $scope.user.starting.split(' ').join('+');
+      let endPlus = $scope.user.ending.split(' ').join('+');
+      let mode = $scope.user.mode;
+      googleFactory.getDirections(startPlus, endPlus, mode)
         .then((response) => {main.responseData = response;
           main.initialize(response)
         })
