@@ -3,8 +3,8 @@ angular.module('secret')
 
     return {
       // Sending call to Google Maps API for directions
-      getDirections(startPlus, endPlus) {
-        var url = `${API_URL}origin=${startPlus}&destination=${endPlus}&key=AIzaSyALb1dIBcyikJwzhS8u8kDKb4mAezdwNok`
+      getDirections(startPlus, endPlus, mode) {
+        var url = `${API_URL}origin=${startPlus}&destination=${endPlus}&mode=${mode}&key=AIzaSyALb1dIBcyikJwzhS8u8kDKb4mAezdwNok`
         console.log(url)
         return $http.get(url)
       }

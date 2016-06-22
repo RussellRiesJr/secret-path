@@ -4,6 +4,7 @@ angular.module('secret')
     return {
       // Putting user route info into Firebase
       setInfo: function (secretPath) {
+        console.log("secret path", secretPath);
         return firebase.database().ref('/paths').push(secretPath).then(response => response.key)
       },
       deletePath: function(key) {
