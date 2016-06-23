@@ -99,6 +99,8 @@ angular.module('secret')
         window.clearInterval(timeIntervalId);
         firebaseFactory.deletePath(pathKey)
         navigator.geolocation.getCurrentPosition(initMap);
+        directionsList.innerHTML = "";
+        directions.innerHTML = `<h5>This path is no longer available.<h5>`;
       }
     }
 
@@ -153,6 +155,7 @@ angular.module('secret')
       }
       secretMap = new google.maps.Map(document.getElementById("holdingMap"), mapOptions);
       directionsDisplay.setMap(secretMap);
+      directionsDisplay.setPanel(document.getElementById("directionsList"));
       map.calcRoute();
     }
 
