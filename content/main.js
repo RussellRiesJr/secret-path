@@ -78,7 +78,7 @@ angular.module('secret', ['ngRoute'])
       let mode = $scope.user.mode;
       let accessLoc = {lat: main.responseData.data.routes[0].legs[0].start_location.lat, lng: main.responseData.data.routes[0].legs[0].start_location.lng};
       let hiddenRoute = main.responseData.data;
-      firebaseFactory.setInfo({coords: accessLoc, dateTime: accessDateTime.toString(), endTime: accessEndTime.toString(), directions: hiddenRoute, startPoint: startAddress, endPoint: endAddress}).then(function(key) {
+      firebaseFactory.setInfo({coords: accessLoc, dateTime: accessDateTime.toString(), endTime: accessEndTime.toString(), directions: hiddenRoute, startPoint: startAddress, endPoint: endAddress, mode: mode}).then(function(key) {
         announce.innerHTML = `<h4>Your Secret Route has been set. It can be accessed by going to ${startAddress} on ${accessDateTime} and opening <a href="http://localhost:8080/#/map/${key}">theSecretPath.com/map/${key}</a>.<h4>`;
       })
       main.resetHome();
