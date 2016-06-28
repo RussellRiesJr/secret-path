@@ -1,18 +1,25 @@
 <div>
   <form>
-    Starting Location:<input type="text" ng-model="user.starting" required />
-    Ending Location: <input type="text" ng-model="user.ending" required />
-    Mode of Travel: <select id="mode" ng-model="user.mode" required>
+    <input type="text" class="col-lg-3" ng-model="user.starting" placeholder="Starting Location" required />
+    <div class="col-lg-1"></div>
+    <input type="text" class="col-lg-3" ng-model="user.ending" placeholder="Ending Location" required />
+    <div class="col-lg-1"></div>
+    <select id="mode" class="col-lg-3" ng-model="user.mode" required>
       <option value="DRIVING">Driving</option>
       <option value="WALKING">Walking</option>
     </select>
+    <div class="col-lg-1"></div>
     <input type="submit" class="btn btn-primary" ng-click="main.locations()" />
   </form>
-  <div id="map"></div>
+  <div class="col-lg-1"></div>
+  <div id="map" class="col-lg-10"></div>
+  <div class="col-lg-1"></div>
   <form>
-    Start Time:<input type="datetime-local" ng-model="user.dateTime" required />
-    Delete Time:<input type="datetime-local" ng-model="user.endTime" required />
-    <button type="submit" class="btn btn-danger" ng-click="main.setPath()">Set</button>
+    <input type="datetime-local" class="col-lg-4" ng-model="user.dateTime" placeholder="Start Time" required />
+    <div class="col-lg-1"></div>
+    <input type="datetime-local" class="col-lg-4" ng-model="user.endTime" placeholder="Delete Time" required />
+    <div class="col-lg-1"></div>
+    <button type="submit" class="btn btn-danger col-lg-2" ng-click="main.setPath()">Set</button>
   </form>
   <div id="announce"></div>
 </div>
