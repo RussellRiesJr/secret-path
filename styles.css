@@ -91,3 +91,8 @@ h1:hover {
   background-color: white;
   box-shadow: 3px 3px grey;
 }
+
+.pad {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
