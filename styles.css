@@ -8,6 +8,7 @@
 
 .font {
   font-family: 'Kanit', sans-serif;
+  text-shadow: 2px 2px grey;
 }
 
 h1:hover {
