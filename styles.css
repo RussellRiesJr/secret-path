@@ -1,5 +1,37 @@
 .whatever {
-  width: 900px;
+  min-width: 900px;
+}
+
+.textHide {
+  color: lightsteelblue;
+}
+
+.font {
+  font-family: 'Kanit', sans-serif;
+}
+
+h1:hover {
+  color: black;
+}
+
+.mapMargin {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.top {
+  padding-top: 10px;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.noTop {
+  margin-top: 0;
+}
+
+.bottomBorder {
+  border-bottom: 4px solid grey;
+  padding-top: 10px;
 }
 
 #map {
@@ -8,6 +40,46 @@
 }
 
 #holdingMap {
-  width: 50vw;
-  height: 50vw;
+  width: 40vw;
+  height: 40vw;
+  display: in;
+}
+
+#directionsList {
+  height: 100%;
+  width: 375px;
+  overflow: auto;
+  background-color: white;
+}
+
+.backblue {
+  background-color: lightsteelblue;
+}
+
+.blueborder {
+  border: 2px solid blue;
+  border-radius: 25px;
+}
+
+.middle {
+  text-align: center;
+}
+
+.bolder {
+  font-weight: bold;
+}
+
+.boxShadow {
+  box-shadow: 3px 3px grey;
+}
+
+.mapShadow {
+  box-shadow: 5px 5px grey;
+}
+
+.announceBox {
+  border: 2px solid blue;
+  border-radius: 25px;
+  background-color: white;
+  box-shadow: 3px 3px grey;
 }
