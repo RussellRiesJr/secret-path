@@ -1,18 +1,45 @@
 <div>
-  <form>
-    Starting Location:<input type="text" ng-model="user.starting" required />
-    Ending Location: <input type="text" ng-model="user.ending" required />
-    Mode of Travel: <select id="mode" ng-model="user.mode" required>
-      <option value="DRIVING">Driving</option>
-      <option value="WALKING">Walking</option>
-    </select>
-    <input type="submit" class="btn btn-primary" ng-click="main.locations()" />
-  </form>
-  <div id="map"></div>
-  <form>
-    Start Time:<input type="datetime-local" ng-model="user.dateTime" required />
-    Delete Time:<input type="datetime-local" ng-model="user.endTime" required />
-    <button type="submit" class="btn btn-danger" ng-click="main.setPath()">Set</button>
-  </form>
-  <div id="announce"></div>
+  <div class="row">
+    <form>
+      <div class="col-md-1"></div>
+      <input type="text" class="col-md-3 blueborder boxShadow" ng-model="user.starting" placeholder="Starting Location" required />
+      <input type="text" class="col-md-3 blueborder boxShadow" ng-model="user.ending" placeholder="Ending Location" required />
+      <select id="mode" class="col-md-2 blueborder boxShadow" ng-model="user.mode" required>
+        <option value="" disabled selected>Mode of Travel</option>
+        <option value="DRIVING">Driving</option>
+        <option value="WALKING">Walking</option>
+      </select>
+      <input type="submit" class="btn-xs btn-primary blueborder col-md-1 boxShadow" ng-click="main.locations()" />
+      <div class="col-md-1"></div>
+    </form>
+  </div>
+  <div class="bottomBorder"></div>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div id="map" class="col-md-9 blueborder mapShadow mapMargin"></div>
+    <div class="col-md-1"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-3 middle">
+      <p class="font">Set Access Time</p>
+    </div>
+    <div class="col-md-3 middle">
+      <p class="font">Set Self-Destruct Time</p>
+    </div>
+    <div class="col-md-5"></div>
+  </div>
+  <div class="row">
+    <form>
+      <div class="col-md-1"></div>
+      <input type="datetime-local" class="col-md-3 blueborder boxShadow" ng-model="user.dateTime" placeholder="Start Time" required />
+      <input type="datetime-local" class="col-md-3 blueborder boxShadow" ng-model="user.endTime" placeholder="Delete Time" required />
+      <div class="col-md-1"></div>
+      <button type="submit" class="btn-xs btn-warning col-md-2 blueborder boxShadow" ng-click="main.setPath()">SET</button>
+      <div class="col-md-2"></div>
+    </form>
+  </div>
+  <div class="row">
+    <div id="announce"></div>
+  </div>
 </div>
