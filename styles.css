@@ -8,6 +8,9 @@
 
 .font {
   font-family: 'Kanit', sans-serif;
+}
+
+.shadowText {
   text-shadow: 2px 2px grey;
 }
 
