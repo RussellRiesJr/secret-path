@@ -96,3 +96,7 @@ h1:hover {
   padding-top: 2px;
   padding-bottom: 2px;
 }
+
+.bottomMargin {
+  margin-bottom: 15px;
+}
