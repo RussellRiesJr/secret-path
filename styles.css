@@ -10,12 +10,16 @@
   font-family: 'Kanit', sans-serif;
 }
 
+h1 {
+  color: grey;
+}
+
 .shadowText {
-  text-shadow: 2px 2px grey;
+  text-shadow: 2px 2px #f0ad4e;
 }
 
 h1:hover {
-  color: black;
+  color: grey;
 }
 
 .mapMargin {
