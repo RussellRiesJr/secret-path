@@ -24,6 +24,6 @@ Users can get directions with Google Maps Directions API, next they set an Acces
  Once a user (using the unque URL) is at the right place at the right time, the results are returned as both a map and as written directions.
  ![Alt text](http://i.imgur.com/6R1NzDY.png)
 The Firebase information will be erased at the predetermined "Self-Destruct Time" and no longer be available to anyone.
-![Alt text](http://i.imgur.com/Hwvz5Co.png)
+![Alt text](http://i.imgur.com/B8bb5AI.png)
 
 
