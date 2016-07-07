@@ -79,7 +79,7 @@ angular.module('secret', ['ngRoute'])
       let accessLoc = {lat: main.responseData.data.routes[0].legs[0].start_location.lat, lng: main.responseData.data.routes[0].legs[0].start_location.lng};
       let hiddenRoute = main.responseData.data;
       firebaseFactory.setInfo({coords: accessLoc, dateTime: accessDateTime.toString(), endTime: accessEndTime.toString(), directions: hiddenRoute, startPoint: startAddress, endPoint: endAddress, mode: mode}).then(function(key) {
-        announce.innerHTML = `<h4 class="announceBox font col-md-12">Your Secret Route has been set. It can be accessed by going to ${startAddress} on ${accessDateTime} and opening <a href="http://localhost:8080/#/map/${key}">theSecretPath.com/map/${key}</a>.<h4>`;
+        announce.innerHTML = `<h4 class="announceBox font col-xs-12">Your Secret Route has been set. It can be accessed by going to ${startAddress} on ${accessDateTime} and opening <a href="http://localhost:8080/#/map/${key}">theSecretPath.com/map/${key}</a>.<h4>`;
       })
       main.resetHome();
     }
@@ -99,7 +99,7 @@ angular.module('secret', ['ngRoute'])
     // Finding user's current position & calling default map function
     navigator.geolocation.getCurrentPosition(initMap);
 
-    // Initilizing default Google Map
+    // Initializing default Google Map
     function initMap (userPosition) {
       var mapDiv = document.getElementById('map');
       map = new google.maps.Map(mapDiv, {
@@ -110,7 +110,7 @@ angular.module('secret', ['ngRoute'])
 
   })
 
-
+// Initializing Firebase
 firebase.initializeApp({
     apiKey: "AIzaSyALb1dIBcyikJwzhS8u8kDKb4mAezdwNok",
     authDomain: "the-secret-path.firebaseapp.com",
