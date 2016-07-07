@@ -1,42 +1,42 @@
 <div>
   <div class="row">
     <form>
-      <div class="col-md-1"></div>
-      <input type="text" class="col-md-3 blueborder boxShadow" ng-model="user.starting" placeholder="Starting Location" required />
-      <input type="text" class="col-md-3 blueborder boxShadow" ng-model="user.ending" placeholder="Ending Location" required />
-      <select id="mode" class="col-md-2 blueborder boxShadow pad" ng-model="user.mode" required>
+      <div class="col-xs-1"></div>
+      <input type="text" class="col-xs-3 blueborder boxShadow" ng-model="user.starting" placeholder="Starting Location" required />
+      <input type="text" class="col-xs-3 blueborder boxShadow" ng-model="user.ending" placeholder="Ending Location" required />
+      <select id="mode" class="col-xs-2 blueborder boxShadow pad" ng-model="user.mode" required>
         <option value="" disabled selected>Mode of Travel</option>
         <option value="DRIVING">Driving</option>
         <option value="WALKING">Walking</option>
       </select>
-      <input type="submit" class="btn-xs btn-primary blueborder col-md-1 boxShadow" ng-click="main.locations()" />
-      <div class="col-md-1"></div>
+      <input type="submit" class="btn-xs btn-primary blueborder col-xs-1 boxShadow" ng-click="main.locations()" />
+      <div class="col-xs-1"></div>
     </form>
   </div>
   <div class="bottomBorder"></div>
   <div class="row">
-    <div class="col-md-3"></div>
-    <div id="map" class="col-md-8 blueborder mapShadow mapMargin"></div>
-    <div class="col-md-1"></div>
+    <div class="col-xs-3"></div>
+    <div id="map" class="col-xs-8 blueborder mapShadow mapMargin"></div>
+    <div class="col-xs-1"></div>
   </div>
   <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-3 middle">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-3 middle">
       <p class="font">Set Access Time</p>
     </div>
-    <div class="col-md-3 middle">
+    <div class="col-xs-3 middle">
       <p class="font">Set Self-Destruct Time</p>
     </div>
-    <div class="col-md-5"></div>
+    <div class="col-xs-5"></div>
   </div>
   <div class="row">
     <form>
-      <div class="col-md-1"></div>
-      <input type="datetime-local" class="col-md-3 blueborder boxShadow bottomMargin" ng-model="user.dateTime" placeholder="Start Time" required />
-      <input type="datetime-local" class="col-md-3 blueborder boxShadow bottomMargin" ng-model="user.endTime" placeholder="Delete Time" required />
-      <div class="col-md-1"></div>
-      <button type="submit" class="btn-xs btn-warning col-md-2 blueborder boxShadow bottomMargin" ng-click="main.setPath()">SET</button>
-      <div class="col-md-2"></div>
+      <div class="col-xs-1"></div>
+      <input type="datetime-local" class="col-xs-3 blueborder boxShadow bottomMargin" ng-model="user.dateTime" placeholder="Start Time" required />
+      <input type="datetime-local" class="col-xs-3 blueborder boxShadow bottomMargin" ng-model="user.endTime" placeholder="Delete Time" required />
+      <div class="col-xs-1"></div>
+      <button type="submit" class="btn-xs btn-warning col-xs-2 blueborder boxShadow bottomMargin" ng-click="main.setPath()">SET</button>
+      <div class="col-xs-2"></div>
     </form>
   </div>
   <div class="row">
