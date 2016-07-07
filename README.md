@@ -10,13 +10,13 @@ First, fork the project...
 
 Next, bower init...
 
-Then bower install the following dependencies...
+Then bower install, which will add the following dependencies...
 * Angular
 * Angular-Route
 * Firebase
 * Bootstrap
 
-You will also need to install a CORS plugin and set it to intercept ```https://maps.googleapis.com/*```
+You will also need to install a CORS plugin and set it to intercept ```https://maps.googleapis.com/*``` I recommend [Allow-Control-Allow-Origin:*](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi)
 
 # Use
 Users can get directions with Google Maps Directions API, next they set an Access Time & Self-Destruct Time. Once satisfied, they can set everything & it gets sent to Firebase, to be accessed when & where specified. The app will then generate a unique URL to be shared with anyone who might access the map. The access location will be the starting address from the directions.
