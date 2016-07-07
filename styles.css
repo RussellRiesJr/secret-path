@@ -1,15 +1,16 @@
+/* Setting background width */
 .whatever {
   min-width: 900px;
 }
 
-.textHide {
-  color: lightsteelblue;
-}
 
+/* Font for the site */
 .font {
   font-family: 'Kanit', sans-serif;
 }
 
+
+/* Related to text at top of the page */
 h1 {
   color: grey;
 }
@@ -18,10 +19,20 @@ h1 {
   text-shadow: 2px 2px #f0ad4e;
 }
 
+.textHide {
+  color: lightsteelblue;
+}
+
 h1:hover {
   color: grey;
 }
 
+.middle {
+  text-align: center;
+}
+
+
+/* Padding & Margins */
 .mapMargin {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -37,11 +48,16 @@ h1:hover {
   margin-top: 0;
 }
 
-.bottomBorder {
-  border-bottom: 4px solid grey;
-  padding-top: 10px;
+.pad {
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
+.bottomMargin {
+  margin-bottom: 15px;
+}
+
+/* Map/directions display */
 #map {
   width: 50vw;
   height: 50vw;
@@ -60,6 +76,8 @@ h1:hover {
   background-color: white;
 }
 
+
+/* General Styling */
 .backblue {
   background-color: lightsteelblue;
 }
@@ -69,8 +87,9 @@ h1:hover {
   border-radius: 25px;
 }
 
-.middle {
-  text-align: center;
+.bottomBorder {
+  border-bottom: 4px solid grey;
+  padding-top: 10px;
 }
 
 .bolder {
@@ -92,11 +111,3 @@ h1:hover {
   box-shadow: 3px 3px grey;
 }
 
-.pad {
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-
-.bottomMargin {
-  margin-bottom: 15px;
-}
