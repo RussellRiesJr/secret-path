@@ -87,6 +87,10 @@ h1:hover {
   border-radius: 25px;
 }
 
+.mapborder {
+  border: 2px solid blue;
+}
+
 .bottomBorder {
   border-bottom: 4px solid grey;
   padding-top: 10px;
